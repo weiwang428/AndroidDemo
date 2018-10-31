@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="catagory">
+        <item>food</item>
+        <item>cloth</item>
+        <item>entertainment</item>
+        <item>traffic</item>
+        <item>health</item>
+    </string-array>
+
+    <string-array name="currency">
+        <item>USD</item>
+        <item>EURO</item>
+        <item>SEK</item>
+        <item>JPY</item>
+        <item>CNY</item>
+    </string-array>
+
+    <string-array name="Account">
+        <item>Cash</item>
+        <item>Credit Card</item>
+        <item>Debit Card</item>
+    </string-array>
+</resources>

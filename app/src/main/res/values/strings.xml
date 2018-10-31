@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Demo_Exercises</string>
+    <string name="amount_message">Enter a amount</string>
+    <string name="button_send">Save</string>
+    <string name="button_search">search</string>
+    <string name="button_insert">insert</string>
+    <string name="button_update">update</string>
+    <string name="button_delete">delete</string>
+    <string name="button_testdb">testDB</string>
+    <string name="remarks_message">Enter remarks</string>
+</resources>
