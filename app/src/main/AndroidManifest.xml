@@ -18,7 +18,7 @@
         </activity>
         <activity android:name=".DisplayMessageActivity" />
         <activity android:name=".TestDBActivity" />
-        <activity android:name=".AddRecordActivity"></activity>
+        <activity android:name=".AddNewExpense"></activity>
     </application>
 
 </manifest>

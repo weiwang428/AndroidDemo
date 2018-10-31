@@ -2,7 +2,6 @@ package com.example.tmp_sda_1162.demo_exercises;
 
 import android.content.Context;
 import android.content.Intent;
-//import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -30,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void start(View view){
-        Intent newIntent= new Intent(this,AddRecordActivity.class);
+        Intent newIntent= new Intent(this,AddNewExpense.class);
         startActivity(newIntent);
     }
 
