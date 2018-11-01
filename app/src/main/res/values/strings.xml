@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Home Expenses</string>
     <string name="amount_message">Enter a amount</string>
+    <string name="login_message_user">Enter a user name</string>
+    <string name="login_message_pw">Enter a password</string>
     <string name="button_send">Save</string>
     <string name="button_search">search</string>
     <string name="button_insert">insert</string>
