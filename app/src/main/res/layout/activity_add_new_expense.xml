@@ -6,6 +6,15 @@
     android:layout_height="match_parent"
     tools:context=".AddNewExpense">
 
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="0dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/timg1" />
+
     <EditText
         android:id="@+id/amountInput"
         android:layout_width="0dp"
