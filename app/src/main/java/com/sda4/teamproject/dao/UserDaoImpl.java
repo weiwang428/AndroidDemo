@@ -4,10 +4,8 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-
-import com.sda4.teamproject.model.Expense;
 import com.sda4.teamproject.model.User;
-import com.sda4.teamproject.util.DataUtil;
+
 
 
 public class UserDaoImpl implements UserDao {
@@ -26,13 +24,11 @@ public class UserDaoImpl implements UserDao {
     @Override
     public void add(User user) {
         if (user != null) {
-            sqLiteUtil.onUpgrade(db, 3, 3);
             ContentValues contentValues = new ContentValues();
             contentValues.put(USER_TABLE_INFO_COLUM_USERNAME, user.getUsername());
             contentValues.put(USER_TABLE_INFO_COLUM_PASSWORD, user.getPassword());
             contentValues.put(USER_TABLE_INFO_COLUM_STATUS, user.isStatus());
             db.insert(USER_TABLE_NAME, null, contentValues);
-            db.close();
         }
     }
 
@@ -48,7 +44,9 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User getUser(String user_name) {
-        Cursor cursor = db.rawQuery("select * from " + USER_TABLE_NAME, null);
+        String querySQL= "select * from " + USER_TABLE_NAME + " where "+USER_TABLE_INFO_COLUM_USERNAME+"='"+user_name+"' and " + USER_TABLE_INFO_COLUM_STATUS + "=1";
+        System.out.println(querySQL);
+        Cursor cursor = db.rawQuery(querySQL, null);
         User userObj = null;
 
         while (cursor.moveToNext()) {
@@ -64,7 +62,11 @@ public class UserDaoImpl implements UserDao {
             userObj = new User(username, password, status);
         }
         cursor.close();
-        db.close();
         return userObj;
     }
+
+    public void closeDBConnection(){
+        db.close();
+    };
+
 }

@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.sda4.teamproject.MainActivity">
-
+    tools:context="com.sda4.teamproject.activity.UserSignup">
 
     <ImageView
         android:layout_width="match_parent"
@@ -14,7 +13,6 @@
         android:layout_marginTop="0dp"
         android:scaleType="centerCrop"
         android:src="@drawable/timg" />
-
 
     <TextView
         android:id="@+id/userLabel"
@@ -44,7 +42,6 @@
         app:layout_constraintStart_toEndOf="@+id/userLabel"
         app:layout_constraintTop_toTopOf="parent" />
 
-
     <TextView
         android:id="@+id/pwLabel"
         android:layout_width="wrap_content"
@@ -73,30 +70,30 @@
         app:layout_constraintStart_toEndOf="@+id/pwLabel"
         app:layout_constraintTop_toBottomOf="@+id/userInput" />
 
-
     <Button
-        android:id="@+id/loginbutton"
+        android:id="@+id/signupButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="220dp"
-        android:onClick="login"
-        android:text="Login"
+        android:onClick="signup"
+        android:text="Continue"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.283"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/registerbutton"
+        android:id="@+id/cancelButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="296dp"
-        android:onClick="signup"
-        android:text="Register"
+        android:layout_marginTop="220dp"
+        android:onClick="cancel"
+        android:text="Cancel"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.8"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
 
 </android.support.constraint.ConstraintLayout>

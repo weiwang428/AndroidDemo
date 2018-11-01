@@ -1,21 +1,23 @@
-package com.example.tmp_sda_1162.demo_exercises;
+package com.sda4.teamproject.activity;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.InputType;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TimePicker;
 
+import com.sda4.teamproject.MainActivity;
+import com.example.tmp_sda_1162.demo_exercises.R;
 import com.sda4.teamproject.dao.ExpenseDao;
 import com.sda4.teamproject.dao.ExpenseDaoImpl;
-import com.sda4.teamproject.dao.SQLiteUtil;
 import com.sda4.teamproject.model.Expense;
 import com.sda4.teamproject.model.User;
 import com.sda4.teamproject.util.DataUtil;
@@ -30,6 +32,7 @@ public class AddNewExpense extends AppCompatActivity {
     private int houre = 0;
     private EditText datePicker;
     private EditText timePicker;
+    private EditText amountInput;
     private Calendar c;
 
     @Override
@@ -40,17 +43,19 @@ public class AddNewExpense extends AppCompatActivity {
 
     }
 
-    private void initView(){
+    private void initView() {
 
-        datePicker= (EditText)findViewById(R.id.datePicker);
+        datePicker = (EditText) findViewById(R.id.datePicker);
         datePicker.setInputType(InputType.TYPE_NULL);
-        timePicker=(EditText)findViewById(R.id.timePicker);
+        timePicker = (EditText) findViewById(R.id.timePicker);
         timePicker.setInputType(InputType.TYPE_NULL);
+        amountInput = (EditText) findViewById(R.id.amountInput);
+
 
         datePicker.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if(hasFocus){
+                if (hasFocus) {
                     showDatePickerDialog();
                 }
             }
@@ -66,7 +71,7 @@ public class AddNewExpense extends AppCompatActivity {
         timePicker.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if(hasFocus){
+                if (hasFocus) {
                     showTimePickerDialog();
                 }
             }
@@ -79,44 +84,82 @@ public class AddNewExpense extends AppCompatActivity {
             }
         });
 
+        amountInput.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.toString().contains(".")) {
+                    if (s.length() - 1 - s.toString().indexOf(".") > 2) {
+                        s = s.toString().subSequence(0,
+                                s.toString().indexOf(".") + 3);
+                        amountInput.setText(s);
+                        amountInput.setSelection(s.length());
+                    }
+                }
+                if (s.toString().trim().substring(0).equals(".")) {
+                    s = "0" + s;
+                    amountInput.setText(s);
+                    amountInput.setSelection(2);
+                }
+
+                if (s.toString().startsWith("0") && s.toString().trim().length() > 1) {
+                    if (!s.toString().substring(1, 2).equals(".")) {
+                        amountInput.setText(s.subSequence(0, 1));
+                        amountInput.setSelection(1);
+                        return;
+                    }
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
+
     private void showDatePickerDialog() {
-        c= Calendar.getInstance();
+        c = Calendar.getInstance();
         new DatePickerDialog(AddNewExpense.this, new DatePickerDialog.OnDateSetListener() {
 
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 // TODO Auto-generated method stub
-                datePicker.setText(year+"/"+(monthOfYear+1)+"/"+dayOfMonth);
+                datePicker.setText(year + "/" + (monthOfYear + 1) + "/" + dayOfMonth);
             }
         }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH)).show();
 
     }
 
 
-    private void showTimePickerDialog(){
-        c= Calendar.getInstance();
+    private void showTimePickerDialog() {
+        c = Calendar.getInstance();
         new TimePickerDialog(AddNewExpense.this, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                timePicker.setText(hourOfDay+":"+minute);
+                timePicker.setText(hourOfDay + ":" + minute);
             }
-        }, c.get(Calendar.HOUR_OF_DAY), c.get(Calendar.MINUTE),true).show();
+        }, c.get(Calendar.HOUR_OF_DAY), c.get(Calendar.MINUTE), true).show();
     }
 
 
     public void addNewExpense(View view) {
         // Do something in response to button
-        Intent newIntent= new Intent(this,MainActivity.class);
-        EditText amountText=(EditText)findViewById(R.id.amountInput);
-        double amount =Double.parseDouble(amountText.getText().toString());
-        String remarks=((EditText) findViewById(R.id.remarksInput)).getText().toString();
-        String date=((EditText)findViewById(R.id.datePicker)).getText().toString();
-        String time=((EditText)findViewById(R.id.timePicker)).getText().toString();
-        String account=(String)((Spinner) findViewById(R.id.accountSpinner)).getSelectedItem();
-        String currency=(String)((Spinner) findViewById(R.id.currencySpinner)).getSelectedItem();
-        String category=(String)((Spinner) findViewById(R.id.categorySpinner)).getSelectedItem();
+        Intent newIntent = new Intent(this, MainActivity.class);
+        EditText amountText = (EditText) findViewById(R.id.amountInput);
+        double amount = Double.parseDouble(amountText.getText().toString());
+        String remarks = ((EditText) findViewById(R.id.remarksInput)).getText().toString();
+        String date = ((EditText) findViewById(R.id.datePicker)).getText().toString();
+        String time = ((EditText) findViewById(R.id.timePicker)).getText().toString();
+        String account = (String) ((Spinner) findViewById(R.id.accountSpinner)).getSelectedItem();
+        String currency = (String) ((Spinner) findViewById(R.id.currencySpinner)).getSelectedItem();
+        String category = (String) ((Spinner) findViewById(R.id.categorySpinner)).getSelectedItem();
         System.out.println(amount);
         System.out.println(remarks);
         System.out.println(account);
@@ -124,8 +167,8 @@ public class AddNewExpense extends AppCompatActivity {
         System.out.println(DataUtil.createDate(date + " " + time));
         System.out.println(currency);
         System.out.println(category);
-        Expense expense=new Expense(amount,category,currency,DataUtil.createDate(date+" "+time),remarks,new User());
-        ExpenseDao expenseDao=new ExpenseDaoImpl(getBaseContext());
+        Expense expense = new Expense(amount, category, currency, DataUtil.createDate(date + " " + time), remarks, new User());
+        ExpenseDao expenseDao = new ExpenseDaoImpl(getBaseContext());
         expenseDao.add(expense);
         startActivity(newIntent);
 
