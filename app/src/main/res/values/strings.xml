@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Demo_Exercises</string>
+    <string name="app_name">Home Expenses</string>
     <string name="amount_message">Enter a amount</string>
     <string name="button_send">Save</string>
     <string name="button_search">search</string>
