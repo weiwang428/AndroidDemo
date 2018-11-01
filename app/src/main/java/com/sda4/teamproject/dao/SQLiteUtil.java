@@ -21,13 +21,14 @@ public class SQLiteUtil extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+        db.execSQL("drop table if exists "+TABLE_NAME);
         StringBuffer stringBuffer = new StringBuffer();
         stringBuffer.append("CREATE TABLE IF NOT EXISTS ");
         stringBuffer.append(TABLE_NAME + "(");
         stringBuffer.append(TABLE_INFO_COLUM_ID+" integer primary key autoincrement ,");
         stringBuffer.append(TABLE_INFO_COLUM_AMOUNT+" varchar(10),");
         stringBuffer.append(TABLE_INFO_COLUM_CATEGORY+" varchar(10),");
-        stringBuffer.append(TABLE_INFO_COLUM_DATETIME+" INTEGER,");
+        stringBuffer.append(TABLE_INFO_COLUM_DATETIME+" text,");
         stringBuffer.append(TABLE_INFO_COLUM_CURRENCY+" varchar(10),");
         stringBuffer.append(TABLE_INFO_COLUM_REMARKS+" varchar(30),");
         stringBuffer.append(TABLE_INFO_COLUM_USER+" varchar(20))");

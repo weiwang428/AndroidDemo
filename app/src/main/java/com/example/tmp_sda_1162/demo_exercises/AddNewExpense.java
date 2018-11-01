@@ -3,6 +3,7 @@ package com.example.tmp_sda_1162.demo_exercises;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputType;
@@ -12,25 +13,31 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TimePicker;
 
+import com.sda4.teamproject.dao.ExpenseDao;
+import com.sda4.teamproject.dao.ExpenseDaoImpl;
+import com.sda4.teamproject.dao.SQLiteUtil;
 import com.sda4.teamproject.model.Expense;
+import com.sda4.teamproject.model.User;
 import com.sda4.teamproject.util.DataUtil;
 
 import java.util.Calendar;
 
 public class AddNewExpense extends AppCompatActivity {
-    int year = 0;
-    int monthOfYear = 0;
-    int dayOfMonth = 0;
-    int minute = 0;
-    int houre = 0;
-    EditText datePicker;
-    EditText timePicker;
+    private int year = 0;
+    private int monthOfYear = 0;
+    private int dayOfMonth = 0;
+    private int minute = 0;
+    private int houre = 0;
+    private EditText datePicker;
+    private EditText timePicker;
     private Calendar c;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_new_expense);
         initView();
+
     }
 
     private void initView(){
@@ -98,6 +105,7 @@ public class AddNewExpense extends AppCompatActivity {
         }, c.get(Calendar.HOUR_OF_DAY), c.get(Calendar.MINUTE),true).show();
     }
 
+
     public void addNewExpense(View view) {
         // Do something in response to button
         Intent newIntent= new Intent(this,MainActivity.class);
@@ -108,16 +116,17 @@ public class AddNewExpense extends AppCompatActivity {
         String time=((EditText)findViewById(R.id.timePicker)).getText().toString();
         String account=(String)((Spinner) findViewById(R.id.accountSpinner)).getSelectedItem();
         String currency=(String)((Spinner) findViewById(R.id.currencySpinner)).getSelectedItem();
-        String catagory=(String)((Spinner) findViewById(R.id.categorySpinner)).getSelectedItem();
-
-        //Expense expense=new Expense(amount,currency,);
+        String category=(String)((Spinner) findViewById(R.id.categorySpinner)).getSelectedItem();
         System.out.println(amount);
         System.out.println(remarks);
         System.out.println(account);
-        System.out.println(date+" "+time);
-        System.out.println(DataUtil.createDate(date+" "+time));
+        System.out.println(date + " " + time);
+        System.out.println(DataUtil.createDate(date + " " + time));
         System.out.println(currency);
-        System.out.println(catagory);
+        System.out.println(category);
+        Expense expense=new Expense(amount,category,currency,DataUtil.createDate(date+" "+time),remarks,new User());
+        ExpenseDao expenseDao=new ExpenseDaoImpl(getBaseContext());
+        expenseDao.add(expense);
         startActivity(newIntent);
 
 

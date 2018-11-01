@@ -23,11 +23,6 @@ public class MainActivity extends AppCompatActivity {
         startActivity(newIntent);
     }
 
-    public void testDB(View view){
-        Intent newIntent= new Intent(this,TestDBActivity.class);
-        startActivity(newIntent);
-    }
-
     public void start(View view){
         Intent newIntent= new Intent(this,AddNewExpense.class);
         startActivity(newIntent);

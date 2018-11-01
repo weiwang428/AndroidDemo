@@ -17,7 +17,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".DisplayMessageActivity" />
-        <activity android:name=".TestDBActivity" />
         <activity android:name=".AddNewExpense"></activity>
     </application>
 

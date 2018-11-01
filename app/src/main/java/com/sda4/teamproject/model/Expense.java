@@ -5,6 +5,7 @@ import java.util.Date;
 public class Expense {
 
     private int id;
+
     private double amount;
     private String category;
     private String currency;
@@ -13,6 +14,26 @@ public class Expense {
     private User user;
 
     public Expense() {
+
+    }
+
+    public Expense(int id, double amount, String category, String currency, Date datetime, String remarks, User user) {
+        this.id = id;
+        this.amount = amount;
+        this.category = category;
+        this.currency = currency;
+        this.datetime = datetime;
+        this.remarks = remarks;
+        this.user = user;
+    }
+
+    public Expense(double amount, String category, String currency, Date datetime, String remarks, User user) {
+        this.amount = amount;
+        this.category = category;
+        this.currency = currency;
+        this.datetime = datetime;
+        this.remarks = remarks;
+        this.user = user;
     }
 
     public int getId() {
@@ -33,15 +54,6 @@ public class Expense {
 
     public String getCategory() {
         return category;
-    }
-
-    public Expense(double amount, String category, String currency, Date datetime, String remarks, User user) {
-        this.amount = amount;
-        this.category = category;
-        this.currency = currency;
-        this.datetime = datetime;
-        this.remarks = remarks;
-        this.user = user;
     }
 
     public void setCategory(String category) {
