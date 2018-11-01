@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddNewExpense">
+    tools:context="com.sda4.teamproject.activity.AddNewExpense">
 
 
     <ImageView
@@ -13,7 +13,8 @@
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
         android:scaleType="centerCrop"
-        android:src="@drawable/timg1" />
+        android:src="@drawable/timg1"
+        />
 
     <EditText
         android:id="@+id/amountInput"
@@ -25,7 +26,8 @@
         android:layout_marginBottom="450dp"
         android:ems="10"
         android:hint="@string/amount_message"
-        android:inputType="text"
+        android:maxLength="10"
+        android:inputType="numberDecimal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/amountLabel"
@@ -194,6 +196,7 @@
         android:layout_marginBottom="280dp"
         android:ems="10"
         android:hint="@string/remarks_message"
+        android:maxLength="30"
         android:inputType="text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

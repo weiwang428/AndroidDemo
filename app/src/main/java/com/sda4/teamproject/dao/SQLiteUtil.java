@@ -43,9 +43,9 @@ public class SQLiteUtil extends SQLiteOpenHelper {
         StringBuffer createUserTable = new StringBuffer();
         createUserTable.append("CREATE TABLE IF NOT EXISTS ");
         createUserTable.append(USER_TABLE_NAME + "(");
-        createUserTable.append(USER_TABLE_INFO_COLUM_USERNAME + "varchar(12),");
-        createUserTable.append(USER_TABLE_INFO_COLUM_PASSWORD + "varchar(20),");
-        createUserTable.append(USER_TABLE_INFO_COLUM_STATUS + "integer)");
+        createUserTable.append(USER_TABLE_INFO_COLUM_USERNAME + " varchar(12),");
+        createUserTable.append(USER_TABLE_INFO_COLUM_PASSWORD + " varchar(20),");
+        createUserTable.append(USER_TABLE_INFO_COLUM_STATUS + " integer)");
 
         System.out.println(createUserTable.toString());
         db.execSQL(createUserTable.toString());
@@ -53,12 +53,12 @@ public class SQLiteUtil extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        String deleteExpenseTable = "drop table if exists "
+        String dropExpenseTable = "drop table if exists "
                 + USER_TABLE_NAME;
-        String deleteUserTable = "drop table if exists "
+        String dropUserTable = "drop table if exists "
                 + USER_TABLE_NAME;
-        db.execSQL(deleteExpenseTable);
-        db.execSQL(deleteUserTable);
+        db.execSQL(dropExpenseTable);
+        db.execSQL(dropUserTable);
         onCreate(db);
     }
 
