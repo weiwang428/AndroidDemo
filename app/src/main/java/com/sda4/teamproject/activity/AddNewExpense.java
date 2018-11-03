@@ -170,9 +170,9 @@ public class AddNewExpense extends AppCompatActivity {
             Toast.makeText(AddNewExpense.this,"Date can not be empty!", Toast.LENGTH_LONG).show();
             dateText.requestFocus();
         }else if(time.length()==0){
-             Toast.makeText(AddNewExpense.this,"Time can not be empty!", Toast.LENGTH_LONG).show();
-             timeText.requestFocus();
-        } else{
+            Toast.makeText(AddNewExpense.this,"Time can not be empty!", Toast.LENGTH_LONG).show();
+            timeText.requestFocus();
+        } else {
             double amount = Double.parseDouble(amountText.getText().toString());
             String account = (String) ((Spinner) findViewById(R.id.accountSpinner)).getSelectedItem();
             String currency = (String) ((Spinner) findViewById(R.id.currencySpinner)).getSelectedItem();
