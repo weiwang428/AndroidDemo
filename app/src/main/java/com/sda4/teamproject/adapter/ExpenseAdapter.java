@@ -1,4 +1,4 @@
-package com.sda4.teamproject.model;
+package com.sda4.teamproject.adapter;
 
 import android.app.Activity;
 import android.content.Context;
@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.tmp_sda_1162.demo_exercises.R;
+import com.sda4.teamproject.model.Expense;
 
 import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
@@ -30,7 +31,7 @@ public class ExpenseAdapter extends ArrayAdapter {
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {
-        SimpleDateFormat sm = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sm = new SimpleDateFormat("yyyy-MM-dd hh:mm");
         LayoutInflater inflater=context.getLayoutInflater();
         View rowView=inflater.inflate(R.layout.listview_entry, null,true);
 

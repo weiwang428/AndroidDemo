@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import com.example.tmp_sda_1162.demo_exercises.R;
 import com.sda4.teamproject.activity.AddNewExpense;
+import com.sda4.teamproject.activity.ExpenseListActivity;
 import com.sda4.teamproject.activity.UserSignup;
 import com.sda4.teamproject.dao.UserDao;
 import com.sda4.teamproject.dao.UserDaoImpl;
@@ -58,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
                 ((UserDaoImpl) userDao).closeDBConnection();
             } else if (password.equals(user.getPassword())) {
                 ((UserDaoImpl) userDao).closeDBConnection();  
-                Intent newIntent = new Intent(this, AddNewExpense.class);
+                Intent newIntent = new Intent(this, ExpenseListActivity.class);
                 newIntent.putExtra(USER_NAME, username);
                 startActivity(newIntent);
             }

@@ -38,7 +38,7 @@ public class ExpenseDaoImpl implements ExpenseDao {
             contentValues.put(EXPENSE_TABLE_INFO_COLUM_DATETIME, DataUtil.dateToString(expense.getDatetime()));
             contentValues.put(EXPENSE_TABLE_INFO_COLUM_CURRENCY, expense.getCurrency());
             contentValues.put(EXPENSE_TABLE_INFO_COLUM_REMARKS, expense.getRemarks());
-            contentValues.put(EXPENSE_TABLE_INFO_COLUM_USER, expense.getUser().getUsername());
+            contentValues.put(EXPENSE_TABLE_INFO_COLUM_USER, expense.getUser());
             db.insert(EXPENSE_TABLE_NAME, null, contentValues);
             db.close();
         }
@@ -54,7 +54,13 @@ public class ExpenseDaoImpl implements ExpenseDao {
     @Override
     public List<Expense> getExpenseList(String condition) {
         List<Expense> list = new ArrayList<Expense>();
-        Cursor cursor = db.rawQuery("select * from " + EXPENSE_TABLE_NAME, null);
+        String querySql="";
+        if (condition==null||condition.trim().equals("")){
+            querySql="select * from " + EXPENSE_TABLE_NAME;
+        }else {
+            querySql="select * from " + EXPENSE_TABLE_NAME +condition;
+        }
+        Cursor cursor = db.rawQuery(querySql, null);
         Expense expense = null;
 
         while (cursor.moveToNext()) {

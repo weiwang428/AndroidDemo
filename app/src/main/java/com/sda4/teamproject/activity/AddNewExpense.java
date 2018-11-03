@@ -31,6 +31,7 @@ public class AddNewExpense extends AppCompatActivity {
     private int dayOfMonth = 0;
     private int minute = 0;
     private int houre = 0;
+    private String username="";
     private EditText datePicker;
     private EditText timePicker;
     private EditText amountInput;
@@ -45,7 +46,7 @@ public class AddNewExpense extends AppCompatActivity {
     }
 
     private void initView() {
-
+        username=getIntent().getExtras().getString("username");
         datePicker = (EditText) findViewById(R.id.datePicker);
         datePicker.setInputType(InputType.TYPE_NULL);
         timePicker = (EditText) findViewById(R.id.timePicker);
@@ -152,7 +153,7 @@ public class AddNewExpense extends AppCompatActivity {
 
     public void addNewExpense(View view) {
         // Do something in response to button
-        Intent newIntent = new Intent(this, MainActivity.class);
+
         EditText amountText = (EditText) findViewById(R.id.amountInput);
         String amountStr=amountText.getText().toString().trim();
         String remarks = ((EditText) findViewById(R.id.remarksInput)).getText().toString().trim();
@@ -173,6 +174,7 @@ public class AddNewExpense extends AppCompatActivity {
             Toast.makeText(AddNewExpense.this,"Time can not be empty!", Toast.LENGTH_LONG).show();
             timeText.requestFocus();
         } else {
+
             double amount = Double.parseDouble(amountText.getText().toString());
             String account = (String) ((Spinner) findViewById(R.id.accountSpinner)).getSelectedItem();
             String currency = (String) ((Spinner) findViewById(R.id.currencySpinner)).getSelectedItem();
@@ -184,11 +186,13 @@ public class AddNewExpense extends AppCompatActivity {
             System.out.println(DataUtil.createDate(date + " " + time));
             System.out.println(currency);
             System.out.println(category);
-            Expense expense = new Expense(amount, category, currency, DataUtil.createDate(date + " " + time), remarks, new User());
+            Expense expense = new Expense(amount, category, currency, DataUtil.createDate(date + " " + time), remarks, username);
             ExpenseDao expenseDao = new ExpenseDaoImpl(getBaseContext());
             expenseDao.add(expense);
-            //startActivity(newIntent);
-            onBackPressed();
+            Intent newIntent = new Intent(this, ExpenseListActivity.class);
+            newIntent.putExtra("username",username);
+            startActivity(newIntent);
+
         }
     }
 }
