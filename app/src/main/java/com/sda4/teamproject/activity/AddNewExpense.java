@@ -13,6 +13,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.sda4.teamproject.MainActivity;
 import com.example.tmp_sda_1162.demo_exercises.R;
@@ -153,25 +154,41 @@ public class AddNewExpense extends AppCompatActivity {
         // Do something in response to button
         Intent newIntent = new Intent(this, MainActivity.class);
         EditText amountText = (EditText) findViewById(R.id.amountInput);
-        double amount = Double.parseDouble(amountText.getText().toString());
-        String remarks = ((EditText) findViewById(R.id.remarksInput)).getText().toString();
-        String date = ((EditText) findViewById(R.id.datePicker)).getText().toString();
-        String time = ((EditText) findViewById(R.id.timePicker)).getText().toString();
-        String account = (String) ((Spinner) findViewById(R.id.accountSpinner)).getSelectedItem();
-        String currency = (String) ((Spinner) findViewById(R.id.currencySpinner)).getSelectedItem();
-        String category = (String) ((Spinner) findViewById(R.id.categorySpinner)).getSelectedItem();
-        System.out.println(amount);
-        System.out.println(remarks);
-        System.out.println(account);
-        System.out.println(date + " " + time);
-        System.out.println(DataUtil.createDate(date + " " + time));
-        System.out.println(currency);
-        System.out.println(category);
-        Expense expense = new Expense(amount, category, currency, DataUtil.createDate(date + " " + time), remarks, new User());
-        ExpenseDao expenseDao = new ExpenseDaoImpl(getBaseContext());
-        expenseDao.add(expense);
-        startActivity(newIntent);
+        String amountStr=amountText.getText().toString().trim();
+        String remarks = ((EditText) findViewById(R.id.remarksInput)).getText().toString().trim();
+        EditText dateText =(EditText) findViewById(R.id.datePicker);
+        String date = dateText.getText().toString().trim();
+        EditText timeText =(EditText) findViewById(R.id.timePicker);
+        String time = timeText.getText().toString().trim();
 
-
+        if(amountStr.length()==0)
+        {
+            Toast.makeText(AddNewExpense.this,"Amount can not be empty!", Toast.LENGTH_LONG).show();
+            amountText.requestFocus();
+        }
+        else if(date.length()==0){
+            Toast.makeText(AddNewExpense.this,"Date can not be empty!", Toast.LENGTH_LONG).show();
+            dateText.requestFocus();
+        }else if(time.length()==0){
+            Toast.makeText(AddNewExpense.this,"Time can not be empty!", Toast.LENGTH_LONG).show();
+            timeText.requestFocus();
+        } else {
+            double amount = Double.parseDouble(amountText.getText().toString());
+            String account = (String) ((Spinner) findViewById(R.id.accountSpinner)).getSelectedItem();
+            String currency = (String) ((Spinner) findViewById(R.id.currencySpinner)).getSelectedItem();
+            String category = (String) ((Spinner) findViewById(R.id.categorySpinner)).getSelectedItem();
+            System.out.println(amount);
+            System.out.println(remarks);
+            System.out.println(account);
+            System.out.println(date + " " + time);
+            System.out.println(DataUtil.createDate(date + " " + time));
+            System.out.println(currency);
+            System.out.println(category);
+            Expense expense = new Expense(amount, category, currency, DataUtil.createDate(date + " " + time), remarks, new User());
+            ExpenseDao expenseDao = new ExpenseDaoImpl(getBaseContext());
+            expenseDao.add(expense);
+            //startActivity(newIntent);
+            onBackPressed();
+        }
     }
 }
