@@ -32,7 +32,6 @@ public class ExpenseDaoImpl implements ExpenseDao {
     @Override
     public void add(Expense expense) {
         if (expense != null) {
-            sqLiteUtil.onUpgrade(db, 3, 3);
             ContentValues contentValues = new ContentValues();
             contentValues.put(EXPENSE_TABLE_INFO_COLUM_AMOUNT, expense.getAmount());
             contentValues.put(EXPENSE_TABLE_INFO_COLUM_CATEGORY, expense.getCategory());
