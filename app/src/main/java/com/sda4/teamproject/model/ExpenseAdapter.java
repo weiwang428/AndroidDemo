@@ -21,26 +21,12 @@ import java.util.List;
 public class ExpenseAdapter extends ArrayAdapter {
     private final Activity context;
     private final List<Expense> exp_list;
-    HashMap<String,Integer> imageMap;
 
 
     public ExpenseAdapter(Activity context, int resource, List<Expense> exp_list) throws NoSuchFieldException, IllegalAccessException{
         super(context, R.layout.listview_entry, exp_list);
         this.context = context;
         this.exp_list = exp_list;
-        imageMap =  new HashMap<>();
-        Resources res = context.getResources();
-        String[] catagory = res.getStringArray(R.array.catagory);
-        for (String cat_name:catagory) {
-            imageMap.put(cat_name, R.drawable.class.getDeclaredField(cat_name).getInt(R.drawable.class));
-        }
-/*
-        imageMap.put("food",R.drawable.food);
-        imageMap.put("cloth",R.drawable.cloth);
-        imageMap.put("entertainment",R.drawable.entertainment);
-        imageMap.put("traffic",R.drawable.traffic);
-        imageMap.put("health",R.drawable.health);
-        */
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -54,10 +40,15 @@ public class ExpenseAdapter extends ArrayAdapter {
         TextView item_money = (TextView) rowView.findViewById(R.id.itemCount);
 
         // Do the assignment.
-        item_image.setImageResource(imageMap.get(this.exp_list.get(position).getCategory()));
+        try{
+        item_image.setImageResource(R.drawable.class.getDeclaredField(this.exp_list.get(position).getCategory()).getInt(R.drawable.class));
         item_label.setText(this.exp_list.get(position).getCategory());
         item_date.setText(sm.format(this.exp_list.get(position).getDatetime()));
         item_money.setText(String.format("%.2f", this.exp_list.get(position).getAmount()));
+        }catch(Exception e)
+        {
+
+        }
 
         return rowView;
     }
