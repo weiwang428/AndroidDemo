@@ -17,7 +17,8 @@
             </intent-filter>
         </activity>
         <activity android:name="com.sda4.teamproject.activity.AddNewExpense" />
-        <activity android:name="com.sda4.teamproject.activity.UserSignup"></activity>
+        <activity android:name="com.sda4.teamproject.activity.UserSignup" />
+        <activity android:name="com.sda4.teamproject.activity.ExpenseListActivity"></activity>
     </application>
 
 </manifest>
