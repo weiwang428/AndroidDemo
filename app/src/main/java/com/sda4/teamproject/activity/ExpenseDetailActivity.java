@@ -9,45 +9,73 @@ import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.sda4.teamproject.MainActivity;
 import com.example.tmp_sda_1162.demo_exercises.R;
 import com.sda4.teamproject.dao.ExpenseDao;
 import com.sda4.teamproject.dao.ExpenseDaoImpl;
 import com.sda4.teamproject.model.Expense;
-import com.sda4.teamproject.model.User;
 import com.sda4.teamproject.util.DataUtil;
 
 import java.util.Calendar;
 
-public class AddNewExpense extends AppCompatActivity  {
+public class ExpenseDetailActivity extends AppCompatActivity implements android.view.View.OnClickListener {
 
-    private String username="";
+    private String username = "";
+    private EditText amountInput;
+    private Spinner categorySpinner;
+    private Spinner currencySpinner;
+    private Spinner accountSpinner;
     private EditText datePicker;
     private EditText timePicker;
-    private EditText amountInput;
+    private EditText remarksInput;
     private Calendar c;
+    private int expense_id = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_new_expense);
+        setContentView(R.layout.activity_expense_detail);
         initView();
-
     }
 
     private void initView() {
-        username=getIntent().getExtras().getString("username");
+        username = getIntent().getExtras().getString("username");
+        expense_id = getIntent().getIntExtra("expense_Id", 0);
+        System.out.println(expense_id);
+        ExpenseDao expenseDao = new ExpenseDaoImpl(this);
+        Expense expense = expenseDao.getSingleExpense(expense_id);
+        amountInput = (EditText) findViewById(R.id.amountInput);
+        amountInput.setText(Double.toString(expense.getAmount()));
         datePicker = (EditText) findViewById(R.id.datePicker);
         datePicker.setInputType(InputType.TYPE_NULL);
+        String dateStr = DataUtil.dateToString(expense.getDatetime());
+        datePicker.setText(dateStr.substring(0, dateStr.indexOf(" ")));
+
         timePicker = (EditText) findViewById(R.id.timePicker);
         timePicker.setInputType(InputType.TYPE_NULL);
-        amountInput = (EditText) findViewById(R.id.amountInput);
+        timePicker.setText(dateStr.substring(dateStr.indexOf(" ") + 1, dateStr.length()));
+        remarksInput = (EditText) findViewById(R.id.remarksInput);
+        remarksInput.setText(expense.getRemarks());
+        categorySpinner = (Spinner) findViewById(R.id.categorySpinner);
+        String[] categoryItems = getResources().getStringArray(R.array.catagory);
+        ArrayAdapter<String> cat_array_adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categoryItems);
+        categorySpinner.setSelection(cat_array_adapter.getPosition(expense.getCategory()));
+
+        currencySpinner = (Spinner) findViewById(R.id.currencySpinner);
+        String[] currencyItems = getResources().getStringArray(R.array.currency);
+        ArrayAdapter<String> cur_array_adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, currencyItems);
+        currencySpinner.setSelection(cur_array_adapter.getPosition(expense.getCurrency()));
+
+        accountSpinner = (Spinner) findViewById(R.id.accountSpinner);
+        String[] accountItems = getResources().getStringArray(R.array.Account);
+        ArrayAdapter<String> acc_array_adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, accountItems);
+        accountSpinner.setSelection(acc_array_adapter.getPosition(expense.getAccount()));
 
 
         datePicker.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -121,10 +149,9 @@ public class AddNewExpense extends AppCompatActivity  {
         });
     }
 
-
     private void showDatePickerDialog() {
         c = Calendar.getInstance();
-        new DatePickerDialog(AddNewExpense.this, new DatePickerDialog.OnDateSetListener() {
+        new DatePickerDialog(ExpenseDetailActivity.this, new DatePickerDialog.OnDateSetListener() {
 
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
@@ -138,7 +165,7 @@ public class AddNewExpense extends AppCompatActivity  {
 
     private void showTimePickerDialog() {
         c = Calendar.getInstance();
-        new TimePickerDialog(AddNewExpense.this, new TimePickerDialog.OnTimeSetListener() {
+        new TimePickerDialog(ExpenseDetailActivity.this, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                 timePicker.setText(hourOfDay + ":" + minute);
@@ -146,49 +173,31 @@ public class AddNewExpense extends AppCompatActivity  {
         }, c.get(Calendar.HOUR_OF_DAY), c.get(Calendar.MINUTE), true).show();
     }
 
-
-    public void addNewExpense(View view) {
-        // Do something in response to button
-
-        EditText amountText = (EditText) findViewById(R.id.amountInput);
-        String amountStr=amountText.getText().toString().trim();
-        String remarks = ((EditText) findViewById(R.id.remarksInput)).getText().toString().trim();
-        EditText dateText =(EditText) findViewById(R.id.datePicker);
-        String date = dateText.getText().toString().trim();
-        EditText timeText =(EditText) findViewById(R.id.timePicker);
-        String time = timeText.getText().toString().trim();
-
-        if(amountStr.length()==0)
-        {
-            Toast.makeText(AddNewExpense.this,"Amount can not be empty!", Toast.LENGTH_LONG).show();
-            amountText.requestFocus();
-        }
-        else if(date.length()==0){
-            Toast.makeText(AddNewExpense.this,"Date can not be empty!", Toast.LENGTH_LONG).show();
-            dateText.requestFocus();
-        }else if(time.length()==0){
-            Toast.makeText(AddNewExpense.this,"Time can not be empty!", Toast.LENGTH_LONG).show();
-            timeText.requestFocus();
-        } else {
-
-            double amount = Double.parseDouble(amountText.getText().toString());
+    @Override
+    public void onClick(View v) {
+        if (v == findViewById(R.id.saveButton)) {
+            String amountStr = amountInput.getText().toString().trim();
+            double amount = Double.parseDouble(amountStr);
+            String remarks = remarksInput.getText().toString().trim();
+            String date = datePicker.getText().toString().trim();
+            String time = timePicker.getText().toString().trim();
             String account = (String) ((Spinner) findViewById(R.id.accountSpinner)).getSelectedItem();
             String currency = (String) ((Spinner) findViewById(R.id.currencySpinner)).getSelectedItem();
             String category = (String) ((Spinner) findViewById(R.id.categorySpinner)).getSelectedItem();
-            System.out.println(amount);
-            System.out.println(remarks);
-            System.out.println(account);
-            System.out.println(date + " " + time);
-            System.out.println(DataUtil.createDate(date + " " + time));
-            System.out.println(currency);
-            System.out.println(category);
-            Expense expense = new Expense(amount, category, currency, account, DataUtil.createDate(date + " " + time), remarks, username);
             ExpenseDao expenseDao = new ExpenseDaoImpl(this);
-            expenseDao.add(expense);
+            expenseDao.updateExpense(expense_id, amount, category, currency, account, DataUtil.createDate(date + " " + time), remarks);
             Intent newIntent = new Intent(this, ExpenseListActivity.class);
-            newIntent.putExtra("username",username);
+            newIntent.putExtra("username", username);
             startActivity(newIntent);
-
+        } else if (v == findViewById(R.id.deleteButton)) {
+            ExpenseDao expenseDao = new ExpenseDaoImpl(this);
+            expenseDao.delete(expense_id);
+            Toast.makeText(this, "Expense Record Deleted", Toast.LENGTH_SHORT);
+            Intent newIntent = new Intent(this, ExpenseListActivity.class);
+            newIntent.putExtra("username", username);
+            startActivity(newIntent);
+        } else if (v == findViewById(R.id.cancelButton)) {
+            finish();
         }
     }
 }

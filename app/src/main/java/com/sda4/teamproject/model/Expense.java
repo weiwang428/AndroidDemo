@@ -9,6 +9,7 @@ public class Expense {
     private double amount;
     private String category;
     private String currency;
+    private String account;
     private Date datetime;
     private String remarks;
     private String username;
@@ -17,20 +18,23 @@ public class Expense {
 
     }
 
-    public Expense(int id, double amount, String category, String currency, Date datetime, String remarks, String username) {
+    public Expense(int id, double amount, String category, String currency, String account, Date datetime, String remarks, String username) {
         this.id = id;
         this.amount = amount;
         this.category = category;
         this.currency = currency;
+        this.account = account;
         this.datetime = datetime;
         this.remarks = remarks;
         this.username = username;
     }
 
-    public Expense(double amount, String category, String currency, Date datetime, String remarks, String username) {
+
+    public Expense(double amount, String category, String currency, String account, Date datetime, String remarks, String username) {
         this.amount = amount;
         this.category = category;
         this.currency = currency;
+        this.account = account;
         this.datetime = datetime;
         this.remarks = remarks;
         this.username = username;
@@ -58,6 +62,14 @@ public class Expense {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public String getAccount() {
+        return account;
+    }
+
+    public void setAccount(String account) {
+        this.account = account;
     }
 
     public String getCurrency() {

@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
             myToast.show();
             ((EditText) findViewById(R.id.pwInput)).requestFocus();
         } else {
-            UserDao userDao = new UserDaoImpl(getBaseContext());
+            UserDao userDao = new UserDaoImpl(this);
             User user = userDao.getUser(username);
             if (user == null) {
                 Toast myToast = Toast.makeText(this, "User does not exist!",

@@ -12,6 +12,7 @@ public class SQLiteUtil extends SQLiteOpenHelper {
     private static final String EXPENSE_TABLE_INFO_COLUM_CATEGORY = "catatory";
     private static final String EXPENSE_TABLE_INFO_COLUM_DATETIME = "datetime";
     private static final String EXPENSE_TABLE_INFO_COLUM_CURRENCY = "currency";
+    private static final String EXPENSE_TABLE_INFO_COLUM_ACCOUNT = "account";
     private static final String EXPENSE_TABLE_INFO_COLUM_REMARKS = "remarks";
     private static final String EXPENSE_TABLE_INFO_COLUM_USER = "user";
     private static final String USER_TABLE_NAME = "user_record";
@@ -34,6 +35,7 @@ public class SQLiteUtil extends SQLiteOpenHelper {
         createExpenseTable.append(EXPENSE_TABLE_INFO_COLUM_CATEGORY + " varchar(10),");
         createExpenseTable.append(EXPENSE_TABLE_INFO_COLUM_DATETIME + " text,");
         createExpenseTable.append(EXPENSE_TABLE_INFO_COLUM_CURRENCY + " varchar(10),");
+        createExpenseTable.append(EXPENSE_TABLE_INFO_COLUM_ACCOUNT + " varchar(10),");
         createExpenseTable.append(EXPENSE_TABLE_INFO_COLUM_REMARKS + " varchar(30),");
         createExpenseTable.append(EXPENSE_TABLE_INFO_COLUM_USER + " varchar(20))");
 
@@ -54,7 +56,7 @@ public class SQLiteUtil extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         String dropExpenseTable = "drop table if exists "
-                + USER_TABLE_NAME;
+                + EXPENSE_TABLE_NAME;
         String dropUserTable = "drop table if exists "
                 + USER_TABLE_NAME;
         db.execSQL(dropExpenseTable);
