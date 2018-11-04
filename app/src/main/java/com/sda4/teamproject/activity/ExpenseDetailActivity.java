@@ -51,7 +51,7 @@ public class ExpenseDetailActivity extends AppCompatActivity implements android.
         ExpenseDao expenseDao = new ExpenseDaoImpl(this);
         Expense expense = expenseDao.getSingleExpense(expense_id);
         amountInput = (EditText) findViewById(R.id.amountInput);
-        amountInput.setText(Double.toString(expense.getAmount()));
+        amountInput.setText(String.format("%.2f", expense.getAmount()));
         datePicker = (EditText) findViewById(R.id.datePicker);
         datePicker.setInputType(InputType.TYPE_NULL);
         String dateStr = DataUtil.dateToString(expense.getDatetime());
