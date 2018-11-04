@@ -17,12 +17,14 @@ public class UserDaoImpl implements UserDao {
     private SQLiteDatabase db;
 
     public UserDaoImpl(Context context) {
-        sqLiteUtil = new SQLiteUtil(context, 3);
+        sqLiteUtil = new SQLiteUtil(context, 8);
+        System.out.println(sqLiteUtil.getWritableDatabase().getVersion());
         db = sqLiteUtil.getWritableDatabase();
     }
 
     @Override
     public void add(User user) {
+        //sqLiteUtil.onUpgrade(db,8,8);
         if (user != null) {
             ContentValues contentValues = new ContentValues();
             contentValues.put(USER_TABLE_INFO_COLUM_USERNAME, user.getUsername());

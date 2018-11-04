@@ -9,31 +9,35 @@ public class Expense {
     private double amount;
     private String category;
     private String currency;
+    private String account;
     private Date datetime;
     private String remarks;
-    private User user;
+    private String username;
 
     public Expense() {
 
     }
 
-    public Expense(int id, double amount, String category, String currency, Date datetime, String remarks, User user) {
+    public Expense(int id, double amount, String category, String currency, String account, Date datetime, String remarks, String username) {
         this.id = id;
         this.amount = amount;
         this.category = category;
         this.currency = currency;
+        this.account = account;
         this.datetime = datetime;
         this.remarks = remarks;
-        this.user = user;
+        this.username = username;
     }
 
-    public Expense(double amount, String category, String currency, Date datetime, String remarks, User user) {
+
+    public Expense(double amount, String category, String currency, String account, Date datetime, String remarks, String username) {
         this.amount = amount;
         this.category = category;
         this.currency = currency;
+        this.account = account;
         this.datetime = datetime;
         this.remarks = remarks;
-        this.user = user;
+        this.username = username;
     }
 
     public int getId() {
@@ -60,6 +64,14 @@ public class Expense {
         this.category = category;
     }
 
+    public String getAccount() {
+        return account;
+    }
+
+    public void setAccount(String account) {
+        this.account = account;
+    }
+
     public String getCurrency() {
         return currency;
     }
@@ -84,12 +96,12 @@ public class Expense {
         this.remarks = remarks;
     }
 
-    public User getUser() {
-        return user;
+    public String getUser() {
+        return this.username;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUser(String username) {
+        this.username = username;
     }
 
 
