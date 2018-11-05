@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.example.tmp_sda_1162.demo_exercises.R;
 import com.sda4.teamproject.model.Expense;
+import com.sda4.teamproject.util.DataUtil;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -26,7 +27,7 @@ public class ExpenseAdapter extends ArrayAdapter {
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {
-        SimpleDateFormat sm = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+        //SimpleDateFormat sm = new SimpleDateFormat("yyyy-MM-dd hh:mm");
         LayoutInflater inflater = context.getLayoutInflater();
         View rowView = inflater.inflate(R.layout.listview_entry, null, true);
 
@@ -41,7 +42,7 @@ public class ExpenseAdapter extends ArrayAdapter {
             item_image.setImageResource(R.drawable.class.getDeclaredField(this.exp_list.get(position).getCategory()).getInt(R.drawable.class));
             item_id.setText(Integer.toString(this.exp_list.get(position).getId()));
             item_label.setText(this.exp_list.get(position).getCategory());
-            item_date.setText(sm.format(this.exp_list.get(position).getDatetime()));
+            item_date.setText(DataUtil.dateToString(this.exp_list.get(position).getDatetime()));
             item_money.setText(String.format("%.2f", this.exp_list.get(position).getAmount()));
         } catch (Exception e) {
 
