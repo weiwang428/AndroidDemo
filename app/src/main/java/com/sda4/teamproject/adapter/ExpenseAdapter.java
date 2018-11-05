@@ -20,14 +20,13 @@ public class ExpenseAdapter extends ArrayAdapter {
     private final List<Expense> exp_list;
 
 
-    public ExpenseAdapter(Activity context, int resource, List<Expense> exp_list) throws NoSuchFieldException, IllegalAccessException {
+    public ExpenseAdapter(Activity context, int resource, List<Expense> exp_list) {
         super(context, R.layout.listview_entry, exp_list);
         this.context = context;
         this.exp_list = exp_list;
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {
-        //SimpleDateFormat sm = new SimpleDateFormat("yyyy-MM-dd hh:mm");
         LayoutInflater inflater = context.getLayoutInflater();
         View rowView = inflater.inflate(R.layout.listview_entry, null, true);
 
@@ -39,15 +38,14 @@ public class ExpenseAdapter extends ArrayAdapter {
 
         // Do the assignment.
         try {
-            item_image.setImageResource(R.drawable.class.getDeclaredField(this.exp_list.get(position).getCategory()).getInt(R.drawable.class));
             item_id.setText(Integer.toString(this.exp_list.get(position).getId()));
             item_label.setText(this.exp_list.get(position).getCategory());
             item_date.setText(DataUtil.dateToString(this.exp_list.get(position).getDatetime()));
             item_money.setText(String.format("%.2f", this.exp_list.get(position).getAmount()));
+            item_image.setImageResource(R.drawable.class.getDeclaredField(this.exp_list.get(position).getCategory()).getInt(R.drawable.class));
         } catch (Exception e) {
-
+            item_image.setImageResource(R.drawable.entertainment);
         }
-
         return rowView;
     }
 }
