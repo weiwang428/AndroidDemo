@@ -39,17 +39,10 @@ public class ExpenseListActivity extends ListActivity {
                 objIndent.putExtra("username", username);
                 objIndent.putExtra("expense_Id", Integer.parseInt(itemId));
                 startActivity(objIndent);
-
             }
         });
-        try {
-
-            ExpenseAdapter adapter = new ExpenseAdapter(this, R.layout.listview_entry, itemList);
-            setListAdapter(adapter);
-
-        } catch (Exception ex) {
-
-        }
+        ExpenseAdapter adapter = new ExpenseAdapter(this, R.layout.listview_entry, itemList);
+        setListAdapter(adapter);
     }
 
 
